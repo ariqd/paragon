@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="title">
-        Obat
+        Pesanan Saya
     </x-slot>
 
     <x-slot name="subtitle">

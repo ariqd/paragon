@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="title">
-        Obat
+        Keranjang
     </x-slot>
 
     <x-slot name="subtitle">

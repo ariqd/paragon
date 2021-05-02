@@ -1,6 +1,6 @@
 <x-layout>
     <x-slot name="title">
-        Obat
+        Visi Misi
     </x-slot>
 
     <x-slot name="subtitle">
