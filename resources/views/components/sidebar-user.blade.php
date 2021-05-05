@@ -32,3 +32,19 @@
         <span>Visi Misi</span>
     </a>
 </li>
+
+<li class="sidebar-title">{{ auth()->user()->name }}</li>
+
+<li class="sidebar-item">
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+
+        <a href="route('logout')" onclick="event.preventDefault();
+                                this.closest('form').submit();" class='sidebar-link'>
+
+            <i class="bi bi-arrow-left-square-fill"></i>
+            <span>Logout</span>
+        </a>
+    </form>
+</li>

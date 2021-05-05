@@ -16,15 +16,20 @@
     <div id="auth">
 
         <div class="row h-100">
+            <div class="col-lg-7 d-none d-lg-block">
+                <div id="auth-right">
+
+                </div>
+            </div>
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
                     <div class="">
                         <a href="/">
-                            <h1>Paragon {{@Auth::guard('admin')->user()->role}}</h1>
+                            <h1>Paragon Admin</h1>
                         </a>
                     </div>
                     <h1 class="auth-title mb-5">Log in.</h1>
-                    {{-- <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p> --}}
+                    {{-- <p class="auth-subtitle mb-4">Log in as Admin.</p> --}}
 
                     <!-- Session Status -->
                     <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -32,7 +37,7 @@
                     <!-- Validation Errors -->
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login-admin') }}">
                         @csrf
 
                         <div class="form-group position-relative has-icon-left mb-4">
@@ -53,17 +58,18 @@
                     </form>
                     <div class="text-center mt-5 text-lg fs-4">
                         <p class="text-gray-600">
-                            Don't have an account?
-                            <a href="{{ url('register') }}" class="font-bold">
-                                Sign up
-                            </a>.
+                            <a href="{{ url('register-admin') }}" class="font-bold">
+                                Sign up Admin
+                            </a>
                         </p>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-7 d-none d-lg-block">
-                <div id="auth-right">
-
+                    <div class="text-center fs-4">
+                        <p class="text-gray-600">
+                            <a href="{{ url('login') }}" class="font-bold">
+                                Login User
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

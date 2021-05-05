@@ -20,6 +20,11 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
+    public function createAdmin()
+    {
+        return view('auth.login-admin');
+    }
+
     /**
      * Handle an incoming authentication request.
      *
@@ -32,11 +37,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if (Auth::user()->role == 'admin') {
-            return redirect()->to('admin/products');
-        }
-
         return redirect()->intended(RouteServiceProvider::HOME);
+    }
+
+    public function storeAdmin(LoginRequest $request)
+    {
+        $request->authenticateAdmin();
+
+        $request->session()->regenerate();
+
+        return redirect()->to('admin/products');
     }
 
     /**
@@ -53,6 +63,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
+    }
+
+    public function destroyAdmin(Request $request)
+    {
+        Auth::guard('admin')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login-admin');
     }
 }

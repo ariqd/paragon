@@ -16,31 +16,15 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
 
-                @if (auth()->user()->role == 'user')
-
-                @include('components.sidebar-user')
-
-                @else
+                @if (auth()->guard('admin')->check())
 
                 @include('components.sidebar-admin')
 
+                @else
+
+                @include('components.sidebar-user')
+
                 @endif
-
-                <li class="sidebar-title">{{ auth()->user()->name }}</li>
-
-                <li class="sidebar-item">
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-
-                        <a href="route('logout')" onclick="event.preventDefault();
-                                                this.closest('form').submit();" class='sidebar-link'>
-
-                            <i class="bi bi-arrow-left-square-fill"></i>
-                            <span>Logout</span>
-                        </a>
-                    </form>
-                </li>
             </ul>
         </div>
         <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
