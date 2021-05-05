@@ -30,7 +30,7 @@
 
             <div class="page-heading">
 
-                <x-page-title title="{{$title}}" subtitle="{{@$subtitle}}" />
+                <x-page-title pageTitle="{{ @$pageTitle }}" subtitle="{{ @$subtitle }}" title="{{ $title }}" />
 
                 <section class="section">
                     {{ $slot }}

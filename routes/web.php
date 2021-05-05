@@ -21,13 +21,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pesanan-saya', [OrdersController::class, 'index']);
     Route::get('/tentang', [AboutController::class, 'index']);
     Route::get('/visi-misi', [VisiMisiController::class, 'index']);
-
-    // Route::group(['middleware' => 'isAdmin'], function () {
-    // });
-
-    // Route::resource('admin/products', AdminProductsController::class);
-    // Route::resource('admin/orders', AdminOrdersController::class);
-    // Route::resource('admin/logs', AdminLogsController::class);
 });
 
 Route::group(['middleware' => 'auth:admin'], function () {
