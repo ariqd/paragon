@@ -6,6 +6,9 @@
                     <a href="{{url('/')}}">
                         Paragon
                     </a>
+                    @if (@Auth::guard('admin')->check())
+                    <span>Admin</span>
+                    @endif
                 </div>
                 <div class="toggler">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>

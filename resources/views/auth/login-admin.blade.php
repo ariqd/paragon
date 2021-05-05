@@ -66,7 +66,7 @@
                     <div class="text-center fs-4">
                         <p class="text-gray-600">
                             <a href="{{ url('login') }}" class="font-bold">
-                                Login User
+                                Log in User
                             </a>
                         </p>
                     </div>
