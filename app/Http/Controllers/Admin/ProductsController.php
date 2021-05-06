@@ -24,7 +24,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.products.form');
     }
 
     /**
@@ -57,7 +57,10 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('admin.products.form', [
+            'edit' => true,
+            'id' => $id
+        ]);
     }
 
     /**

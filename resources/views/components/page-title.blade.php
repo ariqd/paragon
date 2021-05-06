@@ -5,11 +5,11 @@
                 @if(@$pageTitle)
                     {!! @$pageTitle !!}
                 @else
-                    <h3>{{ $title }}</h3>
+                    <h3>{{ @$title }}</h3>
                 @endif
 
                 @if(@$subtitle)
-                    <p class="text-subtitle text-muted">{{$subtitle}}</p>
+                    <p class="text-subtitle text-muted">{{ @$subtitle }}</p>
                 @endif
             </div>
         </div>

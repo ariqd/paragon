@@ -4,16 +4,22 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class pageTitle extends Component
+class PageTitle extends Component
 {
+    public $title;
+    public $pageTitle;
+    public $subtitle;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($title, $pageTitle, $subtitle)
     {
-        //
+        $this->title = $title;
+        $this->pageTitle = $pageTitle;
+        $this->subtitle = $subtitle;
     }
 
     /**

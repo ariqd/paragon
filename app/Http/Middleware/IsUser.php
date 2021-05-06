@@ -17,7 +17,7 @@ class IsUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user()->role == 'user') {
+        if (Auth::guard('web')->check()) {
             return $next($request);
         }
 

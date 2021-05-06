@@ -4,10 +4,7 @@
     </x-slot>
 
     <x-slot name="pageTitle">
-        <div class="d-flex justify-content-between align-items-center">
-            <h3>Obat</h3>
-            <a href="{{ url('admin/products/create') }}" class="btn btn-primary">Tambah Produk</a>
-        </div>
+        <h3>Obat</h3>
     </x-slot>
 
     <div class="row mt-3">
@@ -22,10 +19,10 @@
 
     <div class="row mt-3">
         <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
+            <a href="{{ url('products/123') }}" class="card">
                 <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
+                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
+                        class="card-img-top img-fluid" alt="singleminded">
                     <div class="card-body">
                         <h5 class="card-title">Ermethasone</h5>
                         <p class="card-text">
@@ -36,10 +33,10 @@
             </a>
         </div>
         <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
+            <a href="{{ url('products/123') }}" class="card">
                 <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
+                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
+                        class="card-img-top img-fluid" alt="singleminded">
                     <div class="card-body">
                         <h5 class="card-title">Ermethasone</h5>
                         <p class="card-text">
@@ -50,10 +47,10 @@
             </a>
         </div>
         <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
+            <a href="{{ url('products/123') }}" class="card">
                 <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
+                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
+                        class="card-img-top img-fluid" alt="singleminded">
                     <div class="card-body">
                         <h5 class="card-title">Ermethasone</h5>
                         <p class="card-text">
@@ -64,10 +61,10 @@
             </a>
         </div>
         <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
+            <a href="{{ url('products/123') }}" class="card">
                 <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
+                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
+                        class="card-img-top img-fluid" alt="singleminded">
                     <div class="card-body">
                         <h5 class="card-title">Ermethasone</h5>
                         <p class="card-text">
@@ -78,10 +75,10 @@
             </a>
         </div>
         <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
+            <a href="{{ url('products/123') }}" class="card">
                 <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
+                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
+                        class="card-img-top img-fluid" alt="singleminded">
                     <div class="card-body">
                         <h5 class="card-title">Ermethasone</h5>
                         <p class="card-text">
