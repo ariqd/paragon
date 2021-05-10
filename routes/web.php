@@ -16,8 +16,11 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/auth-admin.php';
 
 Route::group(['middleware' => ['auth', 'isUser']], function () {
-    Route::get('/', [HomeController::class, 'index']);
-    Route::get('/products/{id}', [HomeController::class, 'show']);
+
+    Route::name('products.')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::get('/products/{product}', [HomeController::class, 'show'])->name('show');
+    });
 
     Route::get('/keranjang', [CartController::class, 'index']);
     Route::get('/pesanan-saya', [OrdersController::class, 'index']);
