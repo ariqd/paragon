@@ -22,7 +22,11 @@ Route::group(['middleware' => ['auth', 'isUser']], function () {
         Route::get('/products/{product}', [HomeController::class, 'show'])->name('show');
     });
 
-    Route::get('/keranjang', [CartController::class, 'index']);
+    Route::name('cart.')->group(function () {
+        Route::get('/keranjang', [CartController::class, 'index'])->name('index');
+        Route::post('/keranjang/add/{id}', [CartController::class, 'addToCart'])->name('add');
+    });
+
     Route::get('/pesanan-saya', [OrdersController::class, 'index']);
     Route::get('/tentang', [AboutController::class, 'index']);
     Route::get('/visi-misi', [VisiMisiController::class, 'index']);

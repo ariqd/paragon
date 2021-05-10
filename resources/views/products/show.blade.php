@@ -12,40 +12,40 @@
 
     <div class="card mt-3">
         <div class="card-body">
-            <form action="" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col-4">
-                        <img src="{{ asset($product->image) }}" class="card-img-top img-fluid" alt="singleminded">
+            <div class="row">
+                <div class="col-4">
+                    <img src="{{ asset($product->image) }}" class="card-img-top img-fluid" alt="singleminded">
+                    <form action="{{ route('cart.add', $product->id) }}" method="post">
+                        @csrf
                         <div class="d-grid">
-                            <button class="btn btn-primary mt-3">
+                            <button class="btn btn-primary mt-3" type="submit">
                                 PESAN
                             </button>
                         </div>
+                    </form>
+                </div>
+                <div class="col-8">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <h4>{{ $product->name }}</h4>
                     </div>
-                    <div class="col-8">
-                        <div class="form-group">
-                            <label for="name">Nama</label>
-                            <h4>{{ $product->name }}</h4>
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Harga</label>
-                            <h4>Rp {{ number_format($product->price, 0, ',', '.') }}</h4>
-                        </div>
-                        <div class="form-group">
-                            <label for="type">Jenis Packaging Obat</label>
-                            <h4>{{ $product->type }}</h4>
-                        </div>
-                        <div class="form-group">
-                            <label for="type">Tersedia</label>
-                            <h4>{{ $product->stock }} pcs</h4>
-                        </div>
-                        <div class="form-group">
-                            {!! $product->description !!}
-                        </div>
+                    <div class="form-group">
+                        <label for="price">Harga</label>
+                        <h4>Rp {{ number_format($product->price, 0, ',', '.') }}</h4>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Jenis Packaging Obat</label>
+                        <h4>{{ $product->type }}</h4>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">Tersedia</label>
+                        <h4>{{ $product->stock }} pcs</h4>
+                    </div>
+                    <div class="form-group">
+                        {!! $product->description !!}
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </x-layout>

@@ -44,7 +44,6 @@
                 method="POST" enctype="multipart/form-data">
                 @csrf
                 {{ @$edit ? method_field('PUT') : '' }}
-                @include('components.feedback')
                 <div class="row">
                     <div class="col-4">
                         <div class="row">

@@ -9,15 +9,15 @@
 
     <div class="row mt-3">
         <div class="col-12">
-            <a href="{{ url('products') }}"
+            <a href="{{ url('/') }}"
                 class="btn {{ !request()->get('category') ? 'btn-primary' : 'btn-outline-primary' }}">Semua Produk</a>
-            <a href="{{ url('products?category=Box') }}"
+            <a href="{{ url('/?category=Box') }}"
                 class="btn {{ request()->get('category') == 'Box' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Box</a>
-            <a href="{{ url('products?category=Botol') }}"
+            <a href="{{ url('/?category=Botol') }}"
                 class="btn {{ request()->get('category') == 'Botol' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Botol</a>
-            <a href="{{ url('products?category=Tube') }}"
+            <a href="{{ url('/?category=Tube') }}"
                 class="btn {{ request()->get('category') == 'Tube' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Tube</a>
-            <a href="{{ url('products?category=Pot') }}"
+            <a href="{{ url('/?category=Pot') }}"
                 class="btn {{ request()->get('category') == 'Pot' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Pot</a>
         </div>
     </div>

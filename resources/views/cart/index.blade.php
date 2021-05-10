@@ -1,11 +1,11 @@
 <x-layout>
     <x-slot name="title">
-        Keranjang
+        Keranjang Belanja
     </x-slot>
 
-    <x-slot name="subtitle">
+    {{-- <x-slot name="subtitle">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt et vel unde, quae culpa alias repellendus.
-    </x-slot>
+    </x-slot> --}}
 
     <div class="card">
         <div class="table-responsive">
@@ -21,70 +21,41 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($cart['items'] as $product)
                     <tr scope="row">
                         <td class="w-25">
-                            <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
-                                class="w-50 mx-auto d-block" alt="singleminded">
+                            <img src="{{ asset($product['image']) }}" class="w-50 mx-auto d-block" alt="singleminded">
                         </td>
-                        <td class="font-weight-bold">Ermethasone</td>
-                        <td>Rp 200.000</td>
+                        <td class="font-weight-bold">{{ $product['name'] }}</td>
+                        <td>Rp {{ number_format($product['price'], 0, ',', '.') }}</td>
                         <td>
                             <a href="" class="btn btn-outline-primary btn-sm">-</a>
-                            10
+                            <span class="mx-3">
+                                {{ $product['quantity'] }}
+                            </span>
                             <a href="" class="btn btn-outline-primary btn-sm">+</a>
                         </td>
-                        <td>Rp 2.000.000</td>
+                        <td>Rp {{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }}</td>
                         <td class="text-center">
                             <a href="#" class="btn btn-light">
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>
                     </tr>
-                    <tr scope="row">
-                        <td class="w-25">
-                            <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
-                                class="w-50 mx-auto d-block" alt="singleminded">
-                        </td>
-                        <td class="font-weight-bold">Panadol</td>
-                        <td>Rp 200.000</td>
-                        <td>
-                            <a href="" class="btn btn-outline-primary btn-sm">-</a>
-                            10
-                            <a href="" class="btn btn-outline-primary btn-sm">+</a>
-                        </td>
-                        <td>Rp 2.000.000</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-light">
-                                <i class="bi bi-trash"></i>
-                            </a>
+                    @empty
+                    <tr>
+                        <td colspan="6">
+                            <h5 class="text-center">Keranjang Belanja Kosong</h5>
                         </td>
                     </tr>
-                    <tr scope="row">
-                        <td class="w-25">
-                            <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg"
-                                class="w-50 mx-auto d-block" alt="singleminded">
-                        </td>
-                        <td class="font-weight-bold">OBH Combi</td>
-                        <td>Rp 200.000</td>
-                        <td>
-                            <a href="" class="btn btn-outline-primary btn-sm">-</a>
-                            10
-                            <a href="" class="btn btn-outline-primary btn-sm">+</a>
-                        </td>
-                        <td>Rp 2.000.000</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-light">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
+                    @endforelse
                 </tbody>
                 <tfoot>
                     <tr scope="row">
                         <td colspan="4" class="text-end">
                             <strong>Total:</strong>
                         </td>
-                        <td>Rp 6.000.000</td>
+                        <td>Rp {{ number_format($cart['payable'], 0, ',', '.') }}</td>
                         <td class="d-grid">
                             <a href="" class="btn btn-primary">Checkout</a>
                         </td>
