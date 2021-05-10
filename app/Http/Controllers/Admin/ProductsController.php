@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -12,9 +15,17 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.products.index');
+        if (@$request->get('category')) {
+            $product = Product::where('type', @$request->get('category'))->get();
+            if ($product)
+                $data['products'] = $product;
+        } else {
+            $data['products'] = Product::all();
+        }
+
+        return view('admin.products.index', $data);
     }
 
     /**
@@ -35,7 +46,33 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                $extension = $request->image->extension();
+                $request->image->storeAs('/public', $data['name'] . "." . $extension);
+                $data['image'] = Storage::url($data['name'] . "." . $extension);
+            }
+        } else {
+            abort(500, 'Could not upload image :(');
+        }
+
+        Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['string'],
+            'image' => ['required'],
+            'price' => ['required', 'numeric', 'min:100'],
+            'stock' => ['required', 'numeric'],
+            'type' => ['required'],
+        ])->validate();
+
+        if (Product::create($data))
+            return redirect()->route('admin.products.index')->with('info', 'Produk baru berhasil ditambahkan');
+
+        return redirect()->route('admin.products.index')->with('error', 'Produk gagal ditambahkan');
     }
 
     /**
@@ -44,9 +81,11 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        return view('admin.products.show');
+        return view('admin.products.show', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -55,11 +94,11 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
         return view('admin.products.form', [
             'edit' => true,
-            'id' => $id
+            'product' => $product
         ]);
     }
 
@@ -70,9 +109,34 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                $extension = $request->image->extension();
+                $request->image->storeAs('/public', $data['name'] . "." . $extension);
+                $data['image'] = Storage::url($data['name'] . "." . $extension);
+            } else {
+                abort(500, 'Could not upload image :(');
+            }
+        }
+
+        Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['string'],
+            'price' => ['required', 'numeric', 'min:100'],
+            'stock' => ['required', 'numeric'],
+            'type' => ['required'],
+        ])->validate();
+
+        if ($product->update($data))
+            return redirect()->route('admin.products.index')->with('info', 'Data produk berhasil diubah');
+
+        return redirect()->route('admin.products.index')->with('error', 'Data produk gagal diubah');
     }
 
     /**

@@ -12,84 +12,36 @@
 
     <div class="row mt-3">
         <div class="col-12">
-            <a href="" class="btn btn-primary">Semua Produk</a>
-            <a href="" class="btn btn-outline-primary ml-3">Box</a>
-            <a href="" class="btn btn-outline-primary ml-3">Botol</a>
-            <a href="" class="btn btn-outline-primary ml-3">Tube</a>
-            <a href="" class="btn btn-outline-primary ml-3">Pot</a>
+            <a href="{{ url('admin/products') }}"
+                class="btn {{ !request()->get('category') ? 'btn-primary' : 'btn-outline-primary' }}">Semua Produk</a>
+            <a href="{{ url('admin/products?category=Box') }}"
+                class="btn {{ request()->get('category') == 'Box' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Box</a>
+            <a href="{{ url('admin/products?category=Botol') }}"
+                class="btn {{ request()->get('category') == 'Botol' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Botol</a>
+            <a href="{{ url('admin/products?category=Tube') }}"
+                class="btn {{ request()->get('category') == 'Tube' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Tube</a>
+            <a href="{{ url('admin/products?category=Pot') }}"
+                class="btn {{ request()->get('category') == 'Pot' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Pot</a>
         </div>
     </div>
 
     <div class="row mt-3">
+        @forelse ($products as $product)
         <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
+            <a href="{{ route('admin.products.edit', $product) }}" class="card">
                 <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
+                    <img src="{{ asset($product->image) }}" class="card-img-top img-fluid" alt="singleminded">
                     <div class="card-body">
-                        <h5 class="card-title">Ermethasone</h5>
+                        <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text">
-                            Rp 200.000
+                            {{ $product->type }} &bull; Rp {{ number_format($product->price, 0, ',', '.') }}
                         </p>
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
-                <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
-                    <div class="card-body">
-                        <h5 class="card-title">Ermethasone</h5>
-                        <p class="card-text">
-                            Rp 200.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
-                <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
-                    <div class="card-body">
-                        <h5 class="card-title">Ermethasone</h5>
-                        <p class="card-text">
-                            Rp 200.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
-                <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
-                    <div class="card-body">
-                        <h5 class="card-title">Ermethasone</h5>
-                        <p class="card-text">
-                            Rp 200.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-3">
-            <a href="{{ url('admin/products/123/edit') }}" class="card">
-                <div class="card-content">
-                    <img src="https://pixnio.com/free-images/2020/04/22/2020-04-22-12-52-22-1200x800.jpg" class="card-img-top img-fluid"
-                        alt="singleminded">
-                    <div class="card-body">
-                        <h5 class="card-title">Ermethasone</h5>
-                        <p class="card-text">
-                            Rp 200.000
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </div>
+        @empty
+        <h3>No product available</h3>
+        @endforelse
     </div>
 </x-layout>

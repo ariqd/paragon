@@ -25,8 +25,13 @@ Route::group(['middleware' => ['auth', 'isUser']], function () {
     Route::get('/visi-misi', [VisiMisiController::class, 'index']);
 });
 
-Route::group(['middleware' => ['auth:admin', 'isAdmin']], function () {
-    Route::resource('admin/products', AdminProductsController::class);
-    Route::resource('admin/orders', AdminOrdersController::class);
-    Route::resource('admin/logs', AdminLogsController::class);
+Route::group([
+    'middleware' => ['auth:admin', 'isAdmin'],
+    'prefix' => 'admin'
+], function () {
+    Route::name('admin.')->group(function () {
+        Route::resource('products', AdminProductsController::class);
+        Route::resource('orders', AdminOrdersController::class);
+        Route::resource('logs', AdminLogsController::class);
+    });
 });
