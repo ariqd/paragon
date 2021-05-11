@@ -15,7 +15,7 @@
                         <th scope="col" class="w-auto"></th>
                         <th scope="col" class="w-auto">Nama Obat</th>
                         <th scope="col" class="w-auto">Harga</th>
-                        <th scope="col" class="w-auto">Kuantitas</th>
+                        <th scope="col" class="w-auto">Jumlah</th>
                         <th scope="col" class="w-auto">Subtotal</th>
                         <th scope="col" class="w-auto"></th>
                     </tr>
@@ -29,14 +29,16 @@
                         <td class="font-weight-bold">{{ $product['name'] }}</td>
                         <td>Rp {{ number_format($product['price'], 0, ',', '.') }}</td>
                         <td>
-                            <form action="{{ route('cart.decrement', $cartItemIndex) }}" class="d-inline-block" method="post">
+                            <form action="{{ route('cart.decrement', $cartItemIndex) }}" class="d-inline-block"
+                                method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-outline-primary btn-sm">-</button>
                             </form>
                             <span class="mx-3">
                                 {{ $product['quantity'] }}
                             </span>
-                            <form action="{{ route('cart.increment', $cartItemIndex) }}" class="d-inline-block" method="post">
+                            <form action="{{ route('cart.increment', $cartItemIndex) }}" class="d-inline-block"
+                                method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-outline-primary btn-sm">+</button>
                             </form>
@@ -66,11 +68,47 @@
                         </td>
                         <td>Rp {{ number_format($cart['payable'], 0, ',', '.') }}</td>
                         <td class="d-grid">
-                            <a href="" class="btn btn-primary">Checkout</a>
+                            <button type="button" class="btn btn-primary block" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalCenter">
+                                Checkout
+                            </button>
                         </td>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+        style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Konfirmasi Pesanan</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Konfirmasi pesanan untuk {{ array_sum(array_column(cart()->items(), 'quantity')) }} obat ini?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Tutup</span>
+                    </button>
+                    <form action="{{ route('order.checkout') }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-primary ml-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Checkout</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </x-layout>

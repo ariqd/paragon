@@ -30,7 +30,12 @@ Route::group(['middleware' => ['auth', 'isUser']], function () {
         Route::post('/keranjang/decrement/{id}', [CartController::class, 'decrementCartItem'])->name('decrement');
     });
 
-    Route::get('/pesanan-saya', [OrdersController::class, 'index']);
+    Route::name('order.')->group(function () {
+        Route::get('/pesanan-saya', [OrdersController::class, 'index'])->name('index');
+        Route::get('/pesanan-saya/{order}', [OrdersController::class, 'show'])->name('show');
+        Route::post('/checkout', [OrdersController::class, 'checkout'])->name('checkout');
+    });
+
     Route::get('/tentang', [AboutController::class, 'index']);
     Route::get('/visi-misi', [VisiMisiController::class, 'index']);
 });
