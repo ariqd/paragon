@@ -29,4 +29,28 @@ class CartController extends Controller
 
         return redirect()->back()->with('info', 'Obat berhasil dihapus dari keranjang');
     }
+
+    /**
+     * Increment cart item quantity
+     *
+     * @return json
+     */
+    public function incrementCartItem($id)
+    {
+        cart()->incrementQuantityAt($id);
+
+        return redirect()->back()->with('info', 'Jumlah Obat berhasil ditambahkan');
+    }
+
+    /**
+     * Decrement cart item quantity
+     *
+     * @return json
+     */
+    public function decrementCartItem($id)
+    {
+        cart()->decrementQuantityAt($id);
+
+        return redirect()->back()->with('info', 'Jumlah Obat berhasil dikurangi');
+    }
 }
