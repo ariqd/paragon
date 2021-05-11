@@ -31,17 +31,17 @@
                         @foreach ($order->items as $index => $item)
                         <tr scope="row">
                             <td class="w-25">
-                                <img src="{{ asset($item->product->image) }}" class="w-50 mx-auto d-block"
+                                <img src="{{ asset($item->image) }}" class="w-50 mx-auto d-block"
                                     alt="singleminded">
                             </td>
-                            <td class="font-weight-bold">{{ $item->product->name }}</td>
-                            <td>Rp {{ number_format($item->product->price, 0, ',', '.') }}</td>
+                            <td class="font-weight-bold">{{ $item->name }}</td>
+                            <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                             <td>
                                 <span class="mx-3">
                                     {{ $item->quantity }}
                                 </span>
                             </td>
-                            <td>Rp {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                         </tr>
                         @endforeach
                     </tbody>

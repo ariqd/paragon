@@ -66,7 +66,11 @@
                         <td colspan="4" class="text-end">
                             <strong>Total:</strong>
                         </td>
-                        <td>Rp {{ number_format($cart['payable'], 0, ',', '.') }}</td>
+                        <td>
+                            <h4>
+                                Rp {{ number_format($cart['payable'], 0, ',', '.') }}
+                            </h4>
+                        </td>
                         <td class="d-grid">
                             <button type="button" class="btn btn-primary block" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalCenter">
