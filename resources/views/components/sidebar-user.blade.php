@@ -8,7 +8,7 @@
 <li class="sidebar-item {{ request()->is('keranjang*') ? 'active' : '' }}">
     <a href="{{ url('keranjang') }}" class='sidebar-link'>
         <i class="bi bi-cart-fill"></i>
-        <span>Keranjang ({{ array_sum(array_column(cart()->toArray()['items'], 'quantity')) }})</span>
+        <span>Keranjang ({{ array_sum(array_column(cart()->items(), 'quantity')) }})</span>
     </a>
 </li>
 

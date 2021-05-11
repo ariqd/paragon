@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($cart['items'] as $product)
+                    @forelse ($cart['items'] as $cartItemIndex => $product)
                     <tr scope="row">
                         <td class="w-25">
                             <img src="{{ asset($product['image']) }}" class="w-50 mx-auto d-block" alt="singleminded">
@@ -37,9 +37,12 @@
                         </td>
                         <td>Rp {{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }}</td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-light">
-                                <i class="bi bi-trash"></i>
-                            </a>
+                            <form action="{{ route('cart.remove', $cartItemIndex) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-light">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @empty

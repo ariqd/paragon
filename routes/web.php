@@ -25,6 +25,7 @@ Route::group(['middleware' => ['auth', 'isUser']], function () {
     Route::name('cart.')->group(function () {
         Route::get('/keranjang', [CartController::class, 'index'])->name('index');
         Route::post('/keranjang/add/{id}', [CartController::class, 'addToCart'])->name('add');
+        Route::post('/keranjang/remove/{id}', [CartController::class, 'removeFromCart'])->name('remove');
     });
 
     Route::get('/pesanan-saya', [OrdersController::class, 'index']);
