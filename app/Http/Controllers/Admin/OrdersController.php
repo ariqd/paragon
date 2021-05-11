@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -14,7 +15,9 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        return view('admin.orders.index');
+        return view('admin.orders.index', [
+            'orders' => Order::all()
+        ]);
     }
 
     /**
@@ -44,9 +47,9 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
+        return view('admin.orders.show', compact('order'));
     }
 
     /**
@@ -67,9 +70,14 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Order $order)
     {
-        //
+        if ($order->status == 'Menunggu Konfirmasi') {
+            $order->status = 'Telah Dikonfirmasi';
+            $order->save();
+
+            return redirect()->back()->with('info', 'Pesanan berhasil dikonfirmasi.');
+        }
     }
 
     /**
