@@ -15,7 +15,7 @@
 <li class="sidebar-item {{ request()->is('admin/logs*') ? 'active' : '' }}">
     <a href="{{ url('admin/logs') }}" class='sidebar-link'>
         <i class="bi bi-clock-fill"></i>
-        <span>Log Status</span>
+        <span>Log Aktifitas</span>
     </a>
 </li>
 

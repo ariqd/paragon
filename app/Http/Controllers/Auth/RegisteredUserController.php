@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Admin;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -56,6 +57,10 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        Activity::create([
+            'message' => 'Pendaftaran user baru: "' . $user->name . '"'
+        ]);
+
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
@@ -76,6 +81,10 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        Activity::create([
+            'message' => 'Pendaftaran admin baru: "' . $user->name . '"'
+        ]);
 
         Auth::guard('admin')->login($user);
 

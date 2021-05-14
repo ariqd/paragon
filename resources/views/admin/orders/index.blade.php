@@ -21,6 +21,7 @@
             <table class="table table-hover" id="table1">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Tanggal</th>
                         <th>User</th>
                         <th>Keterangan</th>
@@ -31,6 +32,7 @@
                 <tbody>
                     @foreach ($orders as $order)
                     <tr>
+                        <td>{{ $order->id }}</td>
                         <td>{{ $order->created_at->toDayDateTimeString() }}</td>
                         <td>{{ $order->user->name }}</td>
                         <td>{{ $order->count }} pcs Obat</td>

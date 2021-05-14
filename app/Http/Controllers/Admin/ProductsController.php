@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -69,8 +70,15 @@ class ProductsController extends Controller
             'type' => ['required'],
         ])->validate();
 
-        if (Product::create($data))
+        $product = Product::create($data);
+
+        if ($product) {
+            Activity::create([
+                'message' => 'Admin "' . auth()->user()->name . '" menambahkan produk baru: ' . $product->name
+            ]);
+
             return redirect()->route('admin.products.index')->with('info', 'Produk baru berhasil ditambahkan');
+        }
 
         return redirect()->route('admin.products.index')->with('error', 'Produk gagal ditambahkan');
     }
@@ -133,8 +141,13 @@ class ProductsController extends Controller
             'type' => ['required'],
         ])->validate();
 
-        if ($product->update($data))
+        if ($product->update($data)) {
+            Activity::create([
+                'message' => 'Admin "' . auth()->user()->name . '" mengubah data produk: ' . $product->name
+            ]);
+
             return redirect()->route('admin.products.index')->with('info', 'Data produk berhasil diubah');
+        }
 
         return redirect()->route('admin.products.index')->with('error', 'Data produk gagal diubah');
     }

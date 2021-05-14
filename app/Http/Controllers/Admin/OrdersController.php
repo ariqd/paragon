@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class OrdersController extends Controller
     public function index()
     {
         return view('admin.orders.index', [
-            'orders' => Order::all()
+            'orders' => Order::latest()->get()
         ]);
     }
 
@@ -75,6 +76,10 @@ class OrdersController extends Controller
         if ($order->status == 'Menunggu Konfirmasi') {
             $order->status = 'Telah Dikonfirmasi';
             $order->save();
+
+            Activity::create([
+                'message' => 'Admin "' . auth()->user()->name . '" mengonfirmasi pesanan dengan ID # ' . $order->id
+            ]);
 
             return redirect()->back()->with('info', 'Pesanan berhasil dikonfirmasi.');
         }

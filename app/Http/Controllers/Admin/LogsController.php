@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 
 class LogsController extends Controller
@@ -14,7 +15,9 @@ class LogsController extends Controller
      */
     public function index()
     {
-        return view('admin.logs.index');
+        return view('admin.logs.index', [
+            'activities' => Activity::latest()->get()
+        ]);
     }
 
     /**

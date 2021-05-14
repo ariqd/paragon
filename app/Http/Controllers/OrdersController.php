@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -10,10 +11,8 @@ class OrdersController extends Controller
 {
     public function index()
     {
-        // dd(cart()->items());
-
         return view('orders.index', [
-            'orders' => Order::where('user_id', auth()->id())->get()
+            'orders' => Order::where('user_id', auth()->id())->latest()->get()
         ]);
     }
 
@@ -36,11 +35,17 @@ class OrdersController extends Controller
                     'quantity' => $item['quantity']
                 ]);
             }
+
+            Activity::create([
+                'message' => 'User "' . auth()->user()->name . '" melakukan checkout pesanan dengan ID # ' . $order->id
+            ]);
+
+            cart()->clear();
+
+            return redirect()->route('order.index')->with('info', 'Pesanan berhasil dibuat');
         }
 
-        cart()->clear();
-
-        return redirect()->route('order.index')->with('info', 'Pesanan berhasil dibuat');
+        return redirect()->back()->with('error', 'Pesanan gagal checkout');
     }
 
     public function show(Order $order)
