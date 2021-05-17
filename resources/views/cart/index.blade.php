@@ -29,16 +29,18 @@
                         <td class="font-weight-bold">{{ $product['name'] }}</td>
                         <td>Rp {{ number_format($product['price'], 0, ',', '.') }}</td>
                         <td>
-                            <form action="{{ route('cart.decrement', $cartItemIndex) }}" class="d-inline-block"
-                                method="post">
+                            <form
+                                action="{{ route('cart.decrement', ['id' => $cartItemIndex, 'product' => $product['modelId']]) }}"
+                                class="d-inline-block" method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-outline-primary btn-sm">-</button>
                             </form>
                             <span class="mx-3">
                                 {{ $product['quantity'] }}
                             </span>
-                            <form action="{{ route('cart.increment', $cartItemIndex) }}" class="d-inline-block"
-                                method="post">
+                            <form
+                                action="{{ route('cart.increment', ['id' => $cartItemIndex, 'product' => $product['modelId']]) }}"
+                                class="d-inline-block" method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-outline-primary btn-sm">+</button>
                             </form>

@@ -29,6 +29,7 @@ class OrdersController extends Controller
             foreach (cart()->items() as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
+                    'product_id' => $item['modelId'],
                     'name' => $item['name'],
                     'price' => $item['price'],
                     'image' => $item['image'],

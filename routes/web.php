@@ -26,8 +26,8 @@ Route::group(['middleware' => ['auth', 'isUser']], function () {
         Route::get('/keranjang', [CartController::class, 'index'])->name('index');
         Route::post('/keranjang/add/{id}', [CartController::class, 'addToCart'])->name('add');
         Route::post('/keranjang/remove/{id}', [CartController::class, 'removeFromCart'])->name('remove');
-        Route::post('/keranjang/increment/{id}', [CartController::class, 'incrementCartItem'])->name('increment');
-        Route::post('/keranjang/decrement/{id}', [CartController::class, 'decrementCartItem'])->name('decrement');
+        Route::post('/keranjang/increment/{id}/{product}', [CartController::class, 'incrementCartItem'])->name('increment');
+        Route::post('/keranjang/decrement/{id}/{product}', [CartController::class, 'decrementCartItem'])->name('decrement');
     });
 
     Route::name('order.')->group(function () {

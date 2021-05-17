@@ -35,8 +35,14 @@ class CartController extends Controller
      *
      * @return json
      */
-    public function incrementCartItem($id)
+    public function incrementCartItem($id, Product $product)
     {
+        if ($product->stock <= cart()->toArray()['items'][$id]['quantity']) {
+            // dd('true');
+            return redirect()->back()->with('error', 'Jumlah pesanan melebihi stok obat saat ini!');
+        }
+        // dd('');
+
         cart()->incrementQuantityAt($id);
 
         return redirect()->back()->with('info', 'Jumlah Obat berhasil ditambahkan');

@@ -36,11 +36,16 @@
                             <th scope="col" class="w-auto">Nama Obat</th>
                             <th scope="col" class="w-auto">Harga</th>
                             <th scope="col" class="w-auto">Jumlah</th>
+                            <th scope="col" class="w-auto">Stok Saat Ini</th>
                             <th scope="col" class="w-auto">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($order->items as $index => $item)
+                        @php
+                            // $product = App\Models\Product::find($item->id);
+                            dd($item);
+                        @endphp
                         <tr scope="row">
                             <td class="w-25">
                                 <img src="{{ asset($item->image) }}" class="w-50 mx-auto d-block" alt="singleminded">
@@ -48,9 +53,10 @@
                             <td class="font-weight-bold">{{ $item->name }}</td>
                             <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>
                             <td>
-                                <span class="mx-3">
-                                    {{ $item->quantity }}
-                                </span>
+                                {{ $item->quantity }} pcs
+                            </td>
+                            <td>
+                                {{ $product->stock }} pcs
                             </td>
                             <td>Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                         </tr>
@@ -58,7 +64,7 @@
                     </tbody>
                     <tfoot>
                         <tr scope="row">
-                            <td colspan="4" class="text-end">
+                            <td colspan="5" class="text-end">
                                 <strong>Total:</strong>
                             </td>
                             <td>
