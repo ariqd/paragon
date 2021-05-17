@@ -3,22 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
-// use Freshbitsweb\LaravelCartManager\Models\Cart;
 
 class CartController extends Controller
 {
     public function index()
     {
+        $removedItems = [];
+        $count = 0;
+
+        foreach (cart()->items() as $id => $item) {
+            $product = Product::find($item['modelId']);
+
+            if ($product->stock < cart()->items()[$id]['quantity']) {
+                $removedItems[$count]['id'] = $product->id;
+                $removedItems[$count]['name'] = $product->name;
+                $removedItems[$count]['stock_left'] = $product->stock;
+
+                $count++;
+            }
+        }
+
         return view('cart.index', [
-            'cart' => cart()->toArray()
+            'cart' => cart()->toArray(),
+            'removed' => $removedItems,
+            'count' => $count
         ]);
     }
 
-    public function addToCart($id)
+    public function addToCart(Product $product)
     {
-        Product::addToCart($id);
+        if ($product->stock <= 0) {
+            return redirect()->back()->with('error', 'Stok obat sudah habis.');
+        }
+
+        Product::addToCart($product->id);
 
         return redirect()->back()->with('info', 'Obat berhasil ditambahkan ke keranjang');
     }
@@ -37,11 +55,9 @@ class CartController extends Controller
      */
     public function incrementCartItem($id, Product $product)
     {
-        if ($product->stock <= cart()->toArray()['items'][$id]['quantity']) {
-            // dd('true');
+        if ($product->stock <= cart()->items()[$id]['quantity']) {
             return redirect()->back()->with('error', 'Jumlah pesanan melebihi stok obat saat ini!');
         }
-        // dd('');
 
         cart()->incrementQuantityAt($id);
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -18,6 +19,14 @@ class OrdersController extends Controller
 
     public function checkout()
     {
+        foreach (cart()->items() as $item) {
+            $product = Product::find($item['modelId']);
+
+            if ($item['quantity'] > $product->stock) {
+                return redirect()->back()->with('error', 'Pesanan gagal checkout. Terdapat pesanan dengan jumlah stok lebih dari yang tersedia.');
+            }
+        }
+
         $order = Order::create([
             'user_id' => auth()->id(),
             'total' => cart()->getTotal(),

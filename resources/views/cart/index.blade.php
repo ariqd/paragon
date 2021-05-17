@@ -3,10 +3,6 @@
         Keranjang Belanja
     </x-slot>
 
-    {{-- <x-slot name="subtitle">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt et vel unde, quae culpa alias repellendus.
-    </x-slot> --}}
-
     <div class="card">
         <div class="table-responsive">
             <table class="table mb-0">
@@ -22,13 +18,27 @@
                 </thead>
                 <tbody>
                     @forelse ($cart['items'] as $cartItemIndex => $product)
-                    <tr scope="row">
+                    @php
+                    // dd($product['modelId']);
+                    // dd(array_column($removed, 'id'));
+                    // dd();
+                    // dd(in_array())
+                    $currentRemovedItem = [];
+                    if (in_array($product['modelId'], array_column($removed, 'id'))) {
+                    $currentRemovedItem = $removed[array_search($product['modelId'], array_column($removed, 'id'))];
+                    }
+                    @endphp
+                    <tr scope="row"
+                        class="{{ in_array($product['modelId'], array_column($removed, 'id')) ? 'table-active' : '' }}">
                         <td class="w-25">
                             <img src="{{ asset($product['image']) }}" class="w-50 mx-auto d-block" alt="singleminded">
                         </td>
                         <td class="font-weight-bold">{{ $product['name'] }}</td>
                         <td>Rp {{ number_format($product['price'], 0, ',', '.') }}</td>
                         <td>
+                            @if (!empty($currentRemovedItem) && $currentRemovedItem['stock_left'] == 0)
+                            <span>Stok Habis</span>
+                            @else
                             <form
                                 action="{{ route('cart.decrement', ['id' => $cartItemIndex, 'product' => $product['modelId']]) }}"
                                 class="d-inline-block" method="post">
@@ -36,7 +46,7 @@
                                 <button type="submit" class="btn btn-outline-primary btn-sm">-</button>
                             </form>
                             <span class="mx-3">
-                                {{ $product['quantity'] }}
+                                {{ $product['quantity'] }} pcs
                             </span>
                             <form
                                 action="{{ route('cart.increment', ['id' => $cartItemIndex, 'product' => $product['modelId']]) }}"
@@ -44,6 +54,11 @@
                                 @csrf
                                 <button type="submit" class="btn btn-outline-primary btn-sm">+</button>
                             </form>
+                            @endif
+                            <br>
+                            @if (!empty($currentRemovedItem) && $currentRemovedItem['stock_left'] != 0)
+                            <div class="mt-1">Sisa stok: {{$currentRemovedItem['stock_left']}} pcs</div>
+                            @endif
                         </td>
                         <td>Rp {{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }}</td>
                         <td class="text-center">
@@ -75,7 +90,7 @@
                         </td>
                         <td class="d-grid">
                             <button type="button" class="btn btn-primary block" data-bs-toggle="modal"
-                                data-bs-target="#exampleModalCenter">
+                                data-bs-target="#exampleModalCenter" @if($count> 0) disabled @endif>
                                 Checkout
                             </button>
                         </td>

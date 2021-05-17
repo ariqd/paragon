@@ -74,14 +74,32 @@ class OrdersController extends Controller
     public function update(Request $request, Order $order)
     {
         if ($order->status == 'Menunggu Konfirmasi') {
-            $order->status = 'Telah Dikonfirmasi';
-            $order->save();
+            if ($request->decision == 'confirm') {
+                $order->status = 'Telah Dikonfirmasi';
+                $order->save();
 
-            Activity::create([
-                'message' => 'Admin "' . auth()->user()->name . '" mengonfirmasi pesanan dengan ID # ' . $order->id
-            ]);
+                foreach ($order->items as $item) {
+                    $currentStock = $item->product->stock;
+                    $item->product->stock = $currentStock - $item->quantity;
+                    $item->product->save();
+                }
 
-            return redirect()->back()->with('info', 'Pesanan berhasil dikonfirmasi.');
+                Activity::create([
+                    'message' => 'Admin "' . auth()->user()->name . '" mengonfirmasi pesanan dengan ID # ' . $order->id
+                ]);
+
+                return redirect()->back()->with('info', 'Pesanan berhasil dikonfirmasi.');
+            } else {
+                // Batalkan / decline pesanan
+                $order->status = 'Dibatalkan oleh Admin';
+                $order->save();
+
+                Activity::create([
+                    'message' => 'Admin "' . auth()->user()->name . '" membatalkan pesanan dengan ID # ' . $order->id
+                ]);
+
+                return redirect()->back()->with('info', 'Pesanan telah dibatalkan oleh Admin.');
+            }
         }
     }
 

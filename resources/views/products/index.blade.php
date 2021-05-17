@@ -29,9 +29,15 @@
                 <div class="card-content">
                     <img src="{{ asset($product->image) }}" class="card-img-top img-fluid" alt="singleminded">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $product->name }}</h5>
+                        <h5 class="card-title">
+                            {{ $product->name }}
+                        </h5>
                         <p class="card-text">
-                            {{ $product->type }} &bull; Rp {{ number_format($product->price, 0, ',', '.') }}
+                            {{ $product->type }} &bull; Rp {{ number_format($product->price, 0, ',', '.') }} &bull;
+                            @if ($product->stock <= 0) <span class="badge bg-secondary">Habis</span>
+                                @else
+                                {{ $product->stock }} pcs
+                                @endif
                         </p>
                     </div>
                 </div>

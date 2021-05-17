@@ -31,7 +31,7 @@ class Order extends Model
                 return 'success';
                 break;
             default:
-                return 'light';
+                return 'danger';
                 break;
         }
     }
@@ -46,7 +46,7 @@ class Order extends Model
                 return 'Pesanan anda telah dikonfirmasi dan akan segera dikirmkan. Harap hubungi WA 082822733372 untuk info pengiriman.';
                 break;
             default:
-                return 'light';
+                return 'Pesanan anda telah dibatalkan oleh Admin.';
                 break;
         }
     }
