@@ -54,7 +54,7 @@ class ProductsController extends Controller
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
                 $extension = $request->image->extension();
-                $request->image->storeAs('/public', $data['name'] . "." . $extension);
+                $request->image->storeAs('/', $data['name'] . "." . $extension);
                 $data['image'] = Storage::url($data['name'] . "." . $extension);
             }
         } else {
@@ -126,7 +126,7 @@ class ProductsController extends Controller
         if ($request->hasFile('image')) {
             if ($request->file('image')->isValid()) {
                 $extension = $request->image->extension();
-                $request->image->storeAs('/public', $data['name'] . "." . $extension);
+                $request->image->storeAs('/', $data['name'] . "." . $extension);
                 $data['image'] = Storage::url($data['name'] . "." . $extension);
             } else {
                 abort(500, 'Could not upload image :(');
