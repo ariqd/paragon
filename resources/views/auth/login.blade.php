@@ -18,9 +18,10 @@
         <div class="row h-100">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
-                    <div class="">
+                    <div class="mb-3">
                         <a href="/">
-                            <h1>Paragon {{@Auth::guard('admin')->user()->role}}</h1>
+                            <img src="{{ asset('assets/images/logo/paragon_logo.jpeg') }}" alt="paragon_logo">
+                            {{-- <h1>Paragon {{@Auth::guard('admin')->user()->role}}</h1> --}}
                         </a>
                     </div>
                     <h1 class="auth-title mb-5">Log in.</h1>

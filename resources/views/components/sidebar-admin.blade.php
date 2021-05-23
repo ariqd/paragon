@@ -1,3 +1,10 @@
+<li class="sidebar-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
+    <a href="{{ url('admin/dashboard') }}" class='sidebar-link'>
+        <i class="bi bi-speedometer"></i>
+        <span>Dashboard</span>
+    </a>
+</li>
+
 <li class="sidebar-item {{ request()->is('admin/products*') ? 'active' : '' }}">
     <a href="{{ url('admin/products') }}" class='sidebar-link'>
         <i class="bi bi-file-earmark-plus-fill"></i>

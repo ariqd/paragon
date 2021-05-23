@@ -43,7 +43,8 @@ class Order extends Model
                 return 'Harap menunggu Admin untuk melakukan konfirmasi terhadap pesanan anda.';
                 break;
             case 'Telah Dikonfirmasi':
-                return 'Pesanan anda telah dikonfirmasi dan akan segera dikirmkan. Harap hubungi WA 082822733372 untuk info pengiriman.';
+                // return 'Pesanan anda telah dikonfirmasi dan akan segera dikirmkan. Harap hubungi WA 082822733372 untuk info pengiriman.';
+                return 'Pesanan anda telah dikonfirmasi, pihak Paragon akan mengirim WA kepada anda untuk proses pembayaran dan pengiriman.';
                 break;
             default:
                 return 'Pesanan anda telah dibatalkan oleh Admin.';

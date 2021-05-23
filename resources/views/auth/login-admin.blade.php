@@ -18,18 +18,16 @@
         <div class="row h-100">
             <div class="col-lg-7 d-none d-lg-block">
                 <div id="auth-right">
-
                 </div>
             </div>
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
-                    <div class="">
+                    <div class="mb-3">
                         <a href="/">
-                            <h1>Paragon Admin</h1>
+                            <img src="{{ asset('assets/images/logo/paragon_logo.jpeg') }}" alt="paragon_logo">
                         </a>
                     </div>
-                    <h1 class="auth-title mb-5">Log in.</h1>
-                    {{-- <p class="auth-subtitle mb-4">Log in as Admin.</p> --}}
+                    <h1 class="auth-title mb-5">Admin Log in.</h1>
 
                     <!-- Session Status -->
                     <x-auth-session-status class="mb-4" :status="session('status')" />

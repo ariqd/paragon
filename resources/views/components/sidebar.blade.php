@@ -1,15 +1,15 @@
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
         <div class="sidebar-header">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('assets/images/logo/paragon_logo.jpeg') }}" alt="paragon_logo" class="h-50">
+            </a>
             <div class="d-flex justify-content-between">
-                <div class="logo">
-                    <a href="{{url('/')}}">
-                        Paragon
-                    </a>
-                    @if (@Auth::guard('admin')->check())
-                    <span>Admin</span>
-                    @endif
+                @if (@Auth::guard('admin')->check())
+                <div class="logo mt-3">
+                    Admin
                 </div>
+                @endif
                 <div class="toggler">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                 </div>

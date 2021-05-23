@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\VisiMisiController;
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductsController as AdminProductsController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\LogsController as AdminLogsController;
@@ -48,5 +49,6 @@ Route::group([
         Route::resource('products', AdminProductsController::class);
         Route::resource('orders', AdminOrdersController::class);
         Route::resource('logs', AdminLogsController::class);
+        Route::get('dashboard', [AdminDashboardController::class, 'index']);
     });
 });

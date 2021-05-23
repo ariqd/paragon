@@ -2,10 +2,11 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <span class="text-2xl">Paragon - Daftar</span>
-                {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
+                <img src="{{ asset('assets/images/logo/paragon_logo.jpeg') }}" alt="paragon_logo">
             </a>
+            <p class="text-2xl mt-3 text-center">Paragon - Daftar</p>
         </x-slot>
+
 
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
