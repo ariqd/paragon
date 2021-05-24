@@ -19,9 +19,16 @@
     </a>
 </li>
 
+<li class="sidebar-item  {{ request()->is('chat*') ? 'active' : '' }}">
+    <a href="{{ url('chat') }}" class='sidebar-link'>
+        <i class="bi bi-patch-question-fill"></i>
+        <span>Pertanyaan Saya</span>
+    </a>
+</li>
+
 <li class="sidebar-item  {{ request()->is('tentang*') ? 'active' : '' }}">
     <a href="{{ url('tentang') }}" class='sidebar-link'>
-        <i class="bi bi-patch-question-fill"></i>
+        <i class="bi bi-patch-exclamation-fill"></i>
         <span>Tentang</span>
     </a>
 </li>

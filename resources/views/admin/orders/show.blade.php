@@ -6,6 +6,9 @@
     <div class="alert alert-{{ $order->statusColor() }} text-dark d-flex justify-content-between align-items-baseline">
         <div>
             <h4 class="alert-heading">{{ $order->status }}</h4>
+            @if (@$order->cancel_reason)
+            <p>Alasan: {{ $order->cancel_reason }}</p>
+            @endif
         </div>
         <div>
             @if ($order->statusColor() == 'warning')
@@ -44,7 +47,8 @@
                     </thead>
                     <tbody>
                         @foreach ($order->items as $index => $item)
-                        <tr scope="row" class="{{ ($order->statusColor() == 'warning' && $item->product->stock < $item->quantity) ? 'table-danger' : '' }}">
+                        <tr scope="row"
+                            class="{{ ($order->statusColor() == 'warning' && $item->product->stock < $item->quantity) ? 'table-danger' : '' }}">
                             <td class="w-25">
                                 <img src="{{ asset($item->image) }}" class="w-50 mx-auto d-block" alt="singleminded">
                             </td>
@@ -58,7 +62,7 @@
                             <td>
                                 @if ($order->statusColor() == 'warning' && $item->product->stock < $item->quantity)
                                     Jumlah pesanan melebihi stok saat ini.
-                                @endif
+                                    @endif
                             </td>
                         </tr>
                         @endforeach
@@ -82,29 +86,35 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="declineTitle">Batalkan Pesanan</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <i data-feather="x"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Batalkan pesanan ini?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Tutup</span>
-                    </button>
-                    <form action="{{ route('admin.orders.update', $order) }}" method="post">
-                        @csrf
-                        {{ method_field('PUT') }}
+                <form action="{{ route('admin.orders.update', $order) }}" method="post">
+                    @csrf
+                    {{ method_field('PUT') }}
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="declineTitle">Batalkan Pesanan</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{-- <p>Batalkan pesanan ini?</p> --}}
+                        <div class="form-group">
+                            <label for="cancel_reason">Masukkan Alasan Pembatalan</label>
+                            <input type="text" class="form-control" id="cancel_reason" placeholder="Alasan Pembatalan"
+                                name="cancel_reason" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Tutup</span>
+                        </button>
                         <button type="submit" class="btn btn-danger ml-1" value="decline" name="decision">
                             <i class="bx bx-check d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Batalkan Pesanan</span>
                         </button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

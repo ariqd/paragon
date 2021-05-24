@@ -1,9 +1,9 @@
-<li class="sidebar-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
+{{-- <li class="sidebar-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
     <a href="{{ url('admin/dashboard') }}" class='sidebar-link'>
         <i class="bi bi-speedometer"></i>
         <span>Dashboard</span>
     </a>
-</li>
+</li> --}}
 
 <li class="sidebar-item {{ request()->is('admin/products*') ? 'active' : '' }}">
     <a href="{{ url('admin/products') }}" class='sidebar-link'>
@@ -16,6 +16,13 @@
     <a href="{{ url('admin/orders') }}" class='sidebar-link'>
         <i class="bi bi-shop"></i>
         <span>Pesanan</span>
+    </a>
+</li>
+
+<li class="sidebar-item  {{ request()->is('admin/chat*') ? 'active' : '' }}">
+    <a href="{{ url('admin/chat') }}" class='sidebar-link'>
+        <i class="bi bi-patch-question-fill"></i>
+        <span>Pertanyaan</span>
     </a>
 </li>
 

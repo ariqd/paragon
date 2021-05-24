@@ -5,7 +5,12 @@
 
     <div class="alert alert-{{ $order->statusColor() }} text-dark">
         <h4 class="alert-heading">{{ $order->status }}</h4>
-        <p class="fw-light">{{ $order->statusMessage() }}</p>
+        <p class="fw-light">
+            {{ $order->statusMessage() }}
+            @if (@$order->cancel_reason)
+            Alasan: {{ $order->cancel_reason }}
+            @endif
+        </p>
     </div>
 
     <div class="card">
@@ -31,8 +36,7 @@
                         @foreach ($order->items as $index => $item)
                         <tr scope="row">
                             <td class="w-25">
-                                <img src="{{ asset($item->image) }}" class="w-50 mx-auto d-block"
-                                    alt="singleminded">
+                                <img src="{{ asset($item->image) }}" class="w-50 mx-auto d-block" alt="singleminded">
                             </td>
                             <td class="font-weight-bold">{{ $item->name }}</td>
                             <td>Rp {{ number_format($item->price, 0, ',', '.') }}</td>

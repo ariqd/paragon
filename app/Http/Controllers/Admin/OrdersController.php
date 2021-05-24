@@ -92,6 +92,7 @@ class OrdersController extends Controller
             } else {
                 // Batalkan / decline pesanan
                 $order->status = 'Dibatalkan oleh Admin';
+                $order->cancel_reason = $request->cancel_reason;
                 $order->save();
 
                 Activity::create([

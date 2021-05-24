@@ -24,6 +24,25 @@
                             </button>
                         </div>
                     </form>
+                    <div
+                        style="width: 100%; height: 13px; border-bottom: 1px solid #BDBDBD; text-align: center; margin: 15px 0">
+                        <span style="font-size: 15px; background-color: #FFF; padding: 0 10px;">
+                            Atau
+                        </span>
+                    </div>
+                    <form action="{{ route('chat.ask', $product) }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="message">Tanyakan terkait obat ini</label>
+                            <textarea type="text" class="form-control" id="message" placeholder="Tulis pertanyaan"
+                                name="message"></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-outline-primary mt-3" type="submit">
+                                Tanya Admin
+                            </button>
+                        </div>
+                    </form>
                 </div>
                 <div class="col-8">
                     <div class="form-group">
