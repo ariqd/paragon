@@ -11,4 +11,14 @@ class Product extends Model
     use HasFactory, Cartable;
 
     protected $guarded = ['id'];
+
+    public function scopeByCategory($query, $category)
+    {
+        return $query->where('type', $category);
+    }
+
+    public function scopeByName($query, $name)
+    {
+        return $query->where('name', $name);
+    }
 }

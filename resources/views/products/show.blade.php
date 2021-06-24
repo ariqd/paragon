@@ -19,7 +19,7 @@
                         @csrf
                         <div class="d-grid">
                             <button class="btn btn-primary mt-3" type="submit"
-                                {{$product->stock <= 0 ? 'disabled' :''}}>
+                                {{ $product->stock < 10 ? 'disabled' : '' }}>
                                 Tambahkan ke Keranjang
                             </button>
                         </div>
@@ -60,7 +60,7 @@
                     <div class="form-group">
                         <label for="type">Tersedia:</label>
                         <h4>
-                            @if ($product->stock <= 0) 0 pcs <span class="badge bg-secondary">Habis</span>
+                            @if ($product->stock < 10) 0 pcs <span class="badge bg-secondary">Habis</span>
                                 @else
                                 {{ $product->stock }} pcs
                                 @endif

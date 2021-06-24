@@ -3,42 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $removedItems = [];
+        $inCart = [];
         $count = 0;
 
         foreach (cart()->items() as $id => $item) {
             $product = Product::find($item['modelId']);
 
-            if ($product->stock < cart()->items()[$id]['quantity']) {
-                $removedItems[$count]['id'] = $product->id;
-                $removedItems[$count]['name'] = $product->name;
-                $removedItems[$count]['stock_left'] = $product->stock;
+            // if ($product->stock <= cart()->items()[$id]['quantity']) {
+            $inCart[$count]['id'] = $product->id;
+            $inCart[$count]['name'] = $product->name;
+            $inCart[$count]['stock_left'] = $product->stock;
+            $inCart[$count]['type'] = $product->type;
 
-                $count++;
-            }
+            $count++;
+            // }
         }
 
         return view('cart.index', [
             'cart' => cart()->toArray(),
-            'removed' => $removedItems,
+            'removed' => $inCart,
             'count' => $count
         ]);
     }
 
     public function addToCart(Product $product)
     {
-        if ($product->stock <= 0) {
+        $key = array_search($product->id, array_column(cart()->items(), 'modelId'));
+
+        if (isset($key) && is_numeric($key)) {
+            if ($this->checkIfStockExist($key, $product)) {
+                Product::addToCart($product->id);
+
+                return redirect()->back()->with('info', 'Obat berhasil ditambahkan ke keranjang');
+            }
+
             return redirect()->back()->with('error', 'Stok obat sudah habis.');
+        } else {
+            Product::addToCart($product->id, 10);
+
+            return redirect()->back()->with('info', 'Obat berhasil ditambahkan ke keranjang');
         }
-
-        Product::addToCart($product->id);
-
-        return redirect()->back()->with('info', 'Obat berhasil ditambahkan ke keranjang');
     }
 
     public function removeFromCart($id)
@@ -55,9 +65,7 @@ class CartController extends Controller
      */
     public function incrementCartItem($id, Product $product)
     {
-        if ($product->stock <= cart()->items()[$id]['quantity']) {
-            return redirect()->back()->with('error', 'Jumlah pesanan melebihi stok obat saat ini!');
-        }
+        if (!$this->checkIfStockExist($id, $product)) return redirect()->back()->with('error', 'Stok obat sudah maksimum.');
 
         cart()->incrementQuantityAt($id);
 
@@ -74,5 +82,47 @@ class CartController extends Controller
         cart()->decrementQuantityAt($id);
 
         return redirect()->back()->with('info', 'Jumlah Obat berhasil dikurangi');
+    }
+
+    public function update(Request $request, $id, Product $product)
+    {
+        $request->validate([
+            'newQty' => 'required|integer|min:10',
+        ]);
+
+        if ($request->newQty > $product->stock) {
+            return redirect()->back()->with('error', 'Qty baru melebihi stok tersedia.');
+        }
+
+        if (!$this->checkIfStockExist($id, $product, $request->newQty, TRUE)) return redirect()->back()->with('error', 'Stok obat sudah maksimum.');
+
+        cart()->removeAt($id);
+
+        Product::addToCart($product->id, $request->newQty);
+
+        return redirect()->back()->with('info', 'Jumlah Obat berhasil diubah');
+    }
+
+    public function checkIfStockExist($cartId, $product, $addition = 1, $update = FALSE)
+    {
+        if ($product->stock < 10) {
+            cart()->removeAt($cartId);
+
+            return FALSE;
+        }
+
+        $newQty = $update ? $addition : (cart()->items()[$cartId]['quantity'] + $addition);
+
+        // isset(cart()->items()[$cartId])
+
+        // if ($update) {
+        //     $newQty = $addition;
+        // }
+
+        if ($product->stock < $newQty) {
+            return FALSE;
+        }
+
+        return TRUE;
     }
 }

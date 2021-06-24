@@ -8,7 +8,7 @@
     </x-slot>
 
     <div class="row mt-3">
-        <div class="col-12">
+        <div class="col-8">
             <a href="{{ url('/') }}"
                 class="btn {{ !request()->get('category') ? 'btn-primary' : 'btn-outline-primary' }}">Semua Produk</a>
             <a href="{{ url('/?category=Box') }}"
@@ -19,6 +19,15 @@
                 class="btn {{ request()->get('category') == 'Tube' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Tube</a>
             <a href="{{ url('/?category=Pot') }}"
                 class="btn {{ request()->get('category') == 'Pot' ? 'btn-primary' : 'btn-outline-primary' }} ml-3">Pot</a>
+        </div>
+        <div class="col-4 align-items-end">
+            <form action="{{ url('/') }}" method="GET">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Ketik nama obat" aria-label="Ketik nama obat"
+                        aria-describedby="button-addon2" name="nama" value={{ @request()->get('nama') }}>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Cari</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -34,7 +43,7 @@
                         </h5>
                         <p class="card-text">
                             {{ $product->type }} &bull; Rp {{ number_format($product->price, 0, ',', '.') }} &bull;
-                            @if ($product->stock <= 0) <span class="badge bg-secondary">Habis</span>
+                            @if ($product->stock < 10) <span class="badge bg-secondary">Habis</span>
                                 @else
                                 {{ $product->stock }} pcs
                                 @endif

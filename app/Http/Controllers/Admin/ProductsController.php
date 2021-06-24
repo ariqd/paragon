@@ -19,9 +19,9 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         if (@$request->get('category')) {
-            $product = Product::where('type', @$request->get('category'))->get();
-            if ($product)
-                $data['products'] = $product;
+            $data['products'] = Product::byCategory(@$request->get('category'))->get();
+        } else if (@$request->get('nama')) {
+            $data['products'] = Product::byName(@$request->get('nama'))->get();
         } else {
             $data['products'] = Product::all();
         }
